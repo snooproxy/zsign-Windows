@@ -1,0 +1,36 @@
+name: Compile ZSign for Linux
+
+on: push
+
+env:
+  BUILD_TYPE: Release
+  VERBOSE: 1
+
+jobs:
+  build-zsign:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y git wget zip unzip build-essential checkinstall zlib1g-dev libssl-dev
+          cd ..
+          git clone https://github.com/snooproxy/zsign-Windows zsign
+          cd zsign
+          wget -qO- "https://cmake.org/files/v3.21/cmake-3.21.3-linux-x86_64.tar.gz" | \
+          tar --strip-components=1 -xz -C /usr/local
+      - name: Compile zsign
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make
+      - uses: actions/upload-artifact@v3
+        with:
+          name: zsign
+          path: |
+            ${{github.workspace}}/zsign
