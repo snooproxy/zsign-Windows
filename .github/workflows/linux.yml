@@ -22,9 +22,11 @@ jobs:
           
       - name: Compile zsign
         run: |
-          git clone https://github.com/zhlynn/zsign.git
-          cd zsign
+          cd ../..
+          git clone https://github.com/zhlynn/zsign.git zsign-Linux
+          cd zsign-Linux
           pwd
+          ls
           xmake -P
           xmake install -o build
           
