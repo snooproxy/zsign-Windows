@@ -18,7 +18,8 @@ jobs:
       - name: Install dependencies 
         run: |
           sudo add-apt-repository ppa:xmake-io/xmake
-          sudo apt-get update && sudo apt-get install -y git wget zip unzip build-essential checkinstall zlib1g-dev libssl-dev
+          sudo apt-get update && sudo apt-get install -y git zip unzip curl xmake
+          
       - name: Compile zsign
         run: |
           xmake
