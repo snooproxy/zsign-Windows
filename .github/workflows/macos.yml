@@ -1,0 +1,36 @@
+name: Compile ZSign for MacOS
+
+on: push
+
+env:
+  BUILD_TYPE: Release
+  VERBOSE: 1
+
+jobs:
+  build-zsign:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Install dependencies 
+        run: |
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          brew install xmake zip unzip openssl
+      - name: Compile zsign
+        run: |
+          cd ../..
+          git clone https://github.com/zhlynn/zsign.git zsign-Linux
+          cd zsign-Linux
+          pwd
+          ls
+          xmake -P
+          xmake install -o build
+          
+      - uses: actions/upload-artifact@v3
+        with:
+          name: zsign
+          path: |
+            ${{github.workspace}}/build/bin/zsign
