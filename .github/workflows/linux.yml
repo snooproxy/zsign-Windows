@@ -3,7 +3,7 @@ name: Compile ZSign for Linux
 on: push
 
 env:
-  BUILD_TYPE: Release
+  BUILD_TYPE: Debug
   VERBOSE: 1
 
 jobs:
@@ -20,13 +20,15 @@ jobs:
           sudo add-apt-repository ppa:xmake-io/xmake
           sudo apt-get update && sudo apt-get install -y git zip unzip curl xmake
           
-      - name: Clone the linux-optimised repo
-        run: |
-          git clone https://github.com/zhlynn/zsign.git
       - name: Compile zsign
         run: |
           pwd
+          ls
+          git clone https://github.com/zhlynn/zsign.git
+          ls
           cd zsign
+          ls
+          pwd
           xmake
           xmake install -o build
           
