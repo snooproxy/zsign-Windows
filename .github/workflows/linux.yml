@@ -3,7 +3,7 @@ name: Compile ZSign for Linux
 on: push
 
 env:
-  BUILD_TYPE: Debug
+  BUILD_TYPE: Release
   VERBOSE: 1
 
 jobs:
@@ -22,14 +22,10 @@ jobs:
           
       - name: Compile zsign
         run: |
-          pwd
-          ls
           git clone https://github.com/zhlynn/zsign.git
-          ls
           cd zsign
-          ls
           pwd
-          xmake
+          xmake -p
           xmake install -o build
           
       - uses: actions/upload-artifact@v3
